@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Usuario {
+  id          String      @id @default(uuid())
+  nome        String
+  email       String      @unique
+  senha       String
+  idCapela    String
+  ofertorio   Ofertorio[]
+  tipoUsuario TipoUsuario @default(USUARIO)
+  capela      Capela      @relation(fields: [idCapela], references: [id])
+}
+
+model Capela {
+  id            String          @id @default(uuid())
+  nome          String
+  email         String          @unique
+  senha         String
+  entradaDizimo EntradaDizimo[]
+  gastosCapela  GastosCapela[]
+  usuario       Usuario[]
+  dizimistas    Dizimista[]
+  ofertorio     Ofertorio[]
+  categorias    Categoria[]
+}
+
+model Ofertorio {
+  id           String   @id @default(uuid())
+  valor        Decimal
+  data         DateTime
+  descricao    String?
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+  idCapela     String
+  idUsuario    String
+  capela       Capela   @relation(fields: [idCapela], references: [id])
+  usuario      Usuario  @relation(fields: [idUsuario], references: [id])
+}
+
+model Categoria {
+  id          String         @id @default(uuid())
+  nome        String
+  idCapela    String
+  gastoCapela GastosCapela[]
+  capela      Capela         @relation(fields: [idCapela], references: [id])
+}
+
+model GastosCapela {
+  id           String    @id @default(uuid())
+  valor        Decimal
+  descricao    String?
+  data         DateTime
+  idCategoria  String
+  idCapela     String
+  categoria    Categoria @relation(fields: [idCategoria], references: [id])
+  capela       Capela    @relation(fields: [idCapela], references: [id])
+  criadoEm     DateTime  @default(now())
+  atualizadoEm DateTime  @updatedAt
+}
+
+model Dizimista {
+  id       String          @id @default(uuid())
+  nome     String
+  idCapela String
+  capela   Capela          @relation(fields: [idCapela], references: [id])
+  entrada  EntradaDizimo[]
+}
+
+model EntradaDizimo {
+  id           String    @id @default(uuid())
+  valor        Decimal
+  data         DateTime
+  idDizimista  String
+  idCapela     String
+  capela       Capela    @relation(fields: [idCapela], references: [id])
+  dizimista    Dizimista @relation(fields: [idDizimista], references: [id])
+  criadoEm     DateTime  @default(now())
+  atualizadoEm DateTime  @updatedAt
+}
+
+enum TipoUsuario {
+  ADMINISTRADOR
+  USUARIO
+}
