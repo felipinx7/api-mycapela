@@ -6,6 +6,7 @@ export const GastoCapelaSchema = z.object({
     .string()
     .min(4, "A descrição precisar tem mais de 4 caracateres")
     .optional(),
+  data: z.date(),
 });
 
 export type GastoCapelaDTO = z.infer<typeof GastoCapelaSchema>;

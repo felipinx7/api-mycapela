@@ -6,7 +6,7 @@ export const OfertorioSchema = z.object({
     .string()
     .min(4, "A descrição precisar tem mais de 4 caracateres")
     .optional(),
-  data: z.date,
+  data: z.date(),
 });
 
 export type OfertorioDTO = z.infer<typeof OfertorioSchema>;
