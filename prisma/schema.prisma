@@ -1,10 +1,10 @@
 generator client {
   provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  output   = "../generated/prisma"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 
 model Usuario {
@@ -34,7 +34,7 @@ model Capela {
 model Ofertorio {
   id           String   @id @default(uuid())
   valor        Decimal
-  data         DateTime
+  data         DateTime 
   descricao    String?
   criadoEm     DateTime @default(now())
   atualizadoEm DateTime @updatedAt

@@ -556,6 +556,7 @@ export type OfertorioCreateOrConnectWithoutUsuarioInput = {
 
 export type OfertorioCreateManyUsuarioInputEnvelope = {
   data: Prisma.OfertorioCreateManyUsuarioInput | Prisma.OfertorioCreateManyUsuarioInput[]
+  skipDuplicates?: boolean
 }
 
 export type OfertorioUpsertWithWhereUniqueWithoutUsuarioInput = {
@@ -615,6 +616,7 @@ export type OfertorioCreateOrConnectWithoutCapelaInput = {
 
 export type OfertorioCreateManyCapelaInputEnvelope = {
   data: Prisma.OfertorioCreateManyCapelaInput | Prisma.OfertorioCreateManyCapelaInput[]
+  skipDuplicates?: boolean
 }
 
 export type OfertorioUpsertWithWhereUniqueWithoutCapelaInput = {
@@ -1461,6 +1463,7 @@ export type OfertorioCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * The data used to create many Ofertorios.
    */
   data: Prisma.OfertorioCreateManyInput | Prisma.OfertorioCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1479,6 +1482,7 @@ export type OfertorioCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    * The data used to create many Ofertorios.
    */
   data: Prisma.OfertorioCreateManyInput | Prisma.OfertorioCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

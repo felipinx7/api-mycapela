@@ -540,6 +540,7 @@ export type GastosCapelaCreateOrConnectWithoutCapelaInput = {
 
 export type GastosCapelaCreateManyCapelaInputEnvelope = {
   data: Prisma.GastosCapelaCreateManyCapelaInput | Prisma.GastosCapelaCreateManyCapelaInput[]
+  skipDuplicates?: boolean
 }
 
 export type GastosCapelaUpsertWithWhereUniqueWithoutCapelaInput = {
@@ -599,6 +600,7 @@ export type GastosCapelaCreateOrConnectWithoutCategoriaInput = {
 
 export type GastosCapelaCreateManyCategoriaInputEnvelope = {
   data: Prisma.GastosCapelaCreateManyCategoriaInput | Prisma.GastosCapelaCreateManyCategoriaInput[]
+  skipDuplicates?: boolean
 }
 
 export type GastosCapelaUpsertWithWhereUniqueWithoutCategoriaInput = {
@@ -1445,6 +1447,7 @@ export type GastosCapelaCreateManyArgs<ExtArgs extends runtime.Types.Extensions.
    * The data used to create many GastosCapelas.
    */
   data: Prisma.GastosCapelaCreateManyInput | Prisma.GastosCapelaCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1463,6 +1466,7 @@ export type GastosCapelaCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ex
    * The data used to create many GastosCapelas.
    */
   data: Prisma.GastosCapelaCreateManyInput | Prisma.GastosCapelaCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

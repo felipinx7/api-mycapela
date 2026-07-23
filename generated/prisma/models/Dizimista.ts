@@ -360,6 +360,7 @@ export type DizimistaCreateOrConnectWithoutCapelaInput = {
 
 export type DizimistaCreateManyCapelaInputEnvelope = {
   data: Prisma.DizimistaCreateManyCapelaInput | Prisma.DizimistaCreateManyCapelaInput[]
+  skipDuplicates?: boolean
 }
 
 export type DizimistaUpsertWithWhereUniqueWithoutCapelaInput = {
@@ -1194,6 +1195,7 @@ export type DizimistaCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * The data used to create many Dizimistas.
    */
   data: Prisma.DizimistaCreateManyInput | Prisma.DizimistaCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1212,6 +1214,7 @@ export type DizimistaCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    * The data used to create many Dizimistas.
    */
   data: Prisma.DizimistaCreateManyInput | Prisma.DizimistaCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

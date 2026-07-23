@@ -360,6 +360,7 @@ export type CategoriaCreateOrConnectWithoutCapelaInput = {
 
 export type CategoriaCreateManyCapelaInputEnvelope = {
   data: Prisma.CategoriaCreateManyCapelaInput | Prisma.CategoriaCreateManyCapelaInput[]
+  skipDuplicates?: boolean
 }
 
 export type CategoriaUpsertWithWhereUniqueWithoutCapelaInput = {
@@ -1194,6 +1195,7 @@ export type CategoriaCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * The data used to create many Categorias.
    */
   data: Prisma.CategoriaCreateManyInput | Prisma.CategoriaCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1212,6 +1214,7 @@ export type CategoriaCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    * The data used to create many Categorias.
    */
   data: Prisma.CategoriaCreateManyInput | Prisma.CategoriaCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

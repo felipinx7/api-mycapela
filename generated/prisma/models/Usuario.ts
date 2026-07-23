@@ -440,6 +440,7 @@ export type UsuarioCreateOrConnectWithoutCapelaInput = {
 
 export type UsuarioCreateManyCapelaInputEnvelope = {
   data: Prisma.UsuarioCreateManyCapelaInput | Prisma.UsuarioCreateManyCapelaInput[]
+  skipDuplicates?: boolean
 }
 
 export type UsuarioUpsertWithWhereUniqueWithoutCapelaInput = {
@@ -1319,6 +1320,7 @@ export type UsuarioCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * The data used to create many Usuarios.
    */
   data: Prisma.UsuarioCreateManyInput | Prisma.UsuarioCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1337,6 +1339,7 @@ export type UsuarioCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * The data used to create many Usuarios.
    */
   data: Prisma.UsuarioCreateManyInput | Prisma.UsuarioCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

@@ -516,6 +516,7 @@ export type EntradaDizimoCreateOrConnectWithoutCapelaInput = {
 
 export type EntradaDizimoCreateManyCapelaInputEnvelope = {
   data: Prisma.EntradaDizimoCreateManyCapelaInput | Prisma.EntradaDizimoCreateManyCapelaInput[]
+  skipDuplicates?: boolean
 }
 
 export type EntradaDizimoUpsertWithWhereUniqueWithoutCapelaInput = {
@@ -572,6 +573,7 @@ export type EntradaDizimoCreateOrConnectWithoutDizimistaInput = {
 
 export type EntradaDizimoCreateManyDizimistaInputEnvelope = {
   data: Prisma.EntradaDizimoCreateManyDizimistaInput | Prisma.EntradaDizimoCreateManyDizimistaInput[]
+  skipDuplicates?: boolean
 }
 
 export type EntradaDizimoUpsertWithWhereUniqueWithoutDizimistaInput = {
@@ -1404,6 +1406,7 @@ export type EntradaDizimoCreateManyArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many EntradaDizimos.
    */
   data: Prisma.EntradaDizimoCreateManyInput | Prisma.EntradaDizimoCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1422,6 +1425,7 @@ export type EntradaDizimoCreateManyAndReturnArgs<ExtArgs extends runtime.Types.E
    * The data used to create many EntradaDizimos.
    */
   data: Prisma.EntradaDizimoCreateManyInput | Prisma.EntradaDizimoCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

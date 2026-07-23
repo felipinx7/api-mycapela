@@ -1604,6 +1604,7 @@ export type CapelaCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * The data used to create many Capelas.
    */
   data: Prisma.CapelaCreateManyInput | Prisma.CapelaCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1622,6 +1623,7 @@ export type CapelaCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensio
    * The data used to create many Capelas.
    */
   data: Prisma.CapelaCreateManyInput | Prisma.CapelaCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**

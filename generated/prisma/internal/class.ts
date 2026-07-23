@@ -17,10 +17,10 @@ import type * as Prisma from "./prismaNamespace.ts"
 
 const config: runtime.GetPrismaClientConfig = {
   "previewFeatures": [],
-  "clientVersion": "7.8.0",
-  "engineVersion": "3c6e192761c0362d496ed980de936e2f3cebcd3a",
-  "activeProvider": "sqlite",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n}\n\nmodel Usuario {\n  id          String      @id @default(uuid())\n  nome        String\n  email       String      @unique\n  senha       String\n  idCapela    String\n  ofertorio   Ofertorio[]\n  tipoUsuario TipoUsuario @default(USUARIO)\n  capela      Capela      @relation(fields: [idCapela], references: [id])\n}\n\nmodel Capela {\n  id            String          @id @default(uuid())\n  nome          String\n  email         String          @unique\n  senha         String\n  entradaDizimo EntradaDizimo[]\n  gastosCapela  GastosCapela[]\n  usuario       Usuario[]\n  dizimistas    Dizimista[]\n  ofertorio     Ofertorio[]\n  categorias    Categoria[]\n}\n\nmodel Ofertorio {\n  id           String   @id @default(uuid())\n  valor        Decimal\n  data         DateTime\n  descricao    String?\n  criadoEm     DateTime @default(now())\n  atualizadoEm DateTime @updatedAt\n  idCapela     String\n  idUsuario    String\n  capela       Capela   @relation(fields: [idCapela], references: [id])\n  usuario      Usuario  @relation(fields: [idUsuario], references: [id])\n}\n\nmodel Categoria {\n  id          String         @id @default(uuid())\n  nome        String\n  idCapela    String\n  gastoCapela GastosCapela[]\n  capela      Capela         @relation(fields: [idCapela], references: [id])\n}\n\nmodel GastosCapela {\n  id           String    @id @default(uuid())\n  valor        Decimal\n  descricao    String?\n  data         DateTime\n  idCategoria  String\n  idCapela     String\n  categoria    Categoria @relation(fields: [idCategoria], references: [id])\n  capela       Capela    @relation(fields: [idCapela], references: [id])\n  criadoEm     DateTime  @default(now())\n  atualizadoEm DateTime  @updatedAt\n}\n\nmodel Dizimista {\n  id       String          @id @default(uuid())\n  nome     String\n  idCapela String\n  capela   Capela          @relation(fields: [idCapela], references: [id])\n  entrada  EntradaDizimo[]\n}\n\nmodel EntradaDizimo {\n  id           String    @id @default(uuid())\n  valor        Decimal\n  data         DateTime\n  idDizimista  String\n  idCapela     String\n  capela       Capela    @relation(fields: [idCapela], references: [id])\n  dizimista    Dizimista @relation(fields: [idDizimista], references: [id])\n  criadoEm     DateTime  @default(now())\n  atualizadoEm DateTime  @updatedAt\n}\n\nenum TipoUsuario {\n  ADMINISTRADOR\n  USUARIO\n}\n",
+  "clientVersion": "7.9.0",
+  "engineVersion": "e922089b7d7502aff4249d5da3420f6fa55fc6ad",
+  "activeProvider": "postgresql",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Usuario {\n  id          String      @id @default(uuid())\n  nome        String\n  email       String      @unique\n  senha       String\n  idCapela    String\n  ofertorio   Ofertorio[]\n  tipoUsuario TipoUsuario @default(USUARIO)\n  capela      Capela      @relation(fields: [idCapela], references: [id])\n}\n\nmodel Capela {\n  id            String          @id @default(uuid())\n  nome          String\n  email         String          @unique\n  senha         String\n  entradaDizimo EntradaDizimo[]\n  gastosCapela  GastosCapela[]\n  usuario       Usuario[]\n  dizimistas    Dizimista[]\n  ofertorio     Ofertorio[]\n  categorias    Categoria[]\n}\n\nmodel Ofertorio {\n  id           String   @id @default(uuid())\n  valor        Decimal\n  data         DateTime\n  descricao    String?\n  criadoEm     DateTime @default(now())\n  atualizadoEm DateTime @updatedAt\n  idCapela     String\n  idUsuario    String\n  capela       Capela   @relation(fields: [idCapela], references: [id])\n  usuario      Usuario  @relation(fields: [idUsuario], references: [id])\n}\n\nmodel Categoria {\n  id          String         @id @default(uuid())\n  nome        String\n  idCapela    String\n  gastoCapela GastosCapela[]\n  capela      Capela         @relation(fields: [idCapela], references: [id])\n}\n\nmodel GastosCapela {\n  id           String    @id @default(uuid())\n  valor        Decimal\n  descricao    String?\n  data         DateTime\n  idCategoria  String\n  idCapela     String\n  categoria    Categoria @relation(fields: [idCategoria], references: [id])\n  capela       Capela    @relation(fields: [idCapela], references: [id])\n  criadoEm     DateTime  @default(now())\n  atualizadoEm DateTime  @updatedAt\n}\n\nmodel Dizimista {\n  id       String          @id @default(uuid())\n  nome     String\n  idCapela String\n  capela   Capela          @relation(fields: [idCapela], references: [id])\n  entrada  EntradaDizimo[]\n}\n\nmodel EntradaDizimo {\n  id           String    @id @default(uuid())\n  valor        Decimal\n  data         DateTime\n  idDizimista  String\n  idCapela     String\n  capela       Capela    @relation(fields: [idCapela], references: [id])\n  dizimista    Dizimista @relation(fields: [idDizimista], references: [id])\n  criadoEm     DateTime  @default(now())\n  atualizadoEm DateTime  @updatedAt\n}\n\nenum TipoUsuario {\n  ADMINISTRADOR\n  USUARIO\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -45,10 +45,10 @@ async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Modul
 }
 
 config.compilerWasm = {
-  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.sqlite.mjs"),
+  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.mjs"),
 
   getQueryCompilerWasmModule: async () => {
-    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.sqlite.wasm-base64.mjs")
+    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.wasm-base64.mjs")
     return await decodeBase64AsWasm(wasm)
   },
 
@@ -82,7 +82,7 @@ export interface PrismaClientConstructor {
     LogOpts extends LogOptions<Options> = LogOptions<Options>,
     OmitOpts extends Prisma.PrismaClientOptions['omit'] = Options extends { omit: infer U } ? U : Prisma.PrismaClientOptions['omit'],
     ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-  >(options: Prisma.Subset<Options, Prisma.PrismaClientOptions> ): PrismaClient<LogOpts, OmitOpts, ExtArgs>
+  >(options: Prisma.PrismaClientConstructorArgs<Options>): PrismaClient<LogOpts, OmitOpts, ExtArgs>
 }
 
 /**
@@ -103,7 +103,7 @@ export interface PrismaClientConstructor {
 
 export interface PrismaClient<
   in LogOpts extends Prisma.LogLevel = never,
-  in out OmitOpts extends Prisma.PrismaClientOptions['omit'] = undefined,
+  in out OmitOpts extends Prisma.PrismaClientOptions['omit'] = Prisma.PrismaClientOptions['omit'],
   in out ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
