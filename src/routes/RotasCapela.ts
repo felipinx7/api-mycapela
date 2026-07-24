@@ -25,7 +25,7 @@ routerCapela.get(
   async (req, res) => await PegarCapelasController({ req, res }),
 );
 
-routerCapela.post(
+routerCapela.put(
   "/atualizar",
   async (req, res) => await AtualizarCapelaController({ req, res }),
 );
