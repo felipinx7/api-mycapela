@@ -9,7 +9,7 @@ export async function CriarCapela(dadosCapela: CapelaDTO, senhaHash: string) {
       senha: senhaHash,
     },
   });
-  
+
   return capela;
 }
 
@@ -46,4 +46,12 @@ export async function DeleteCapela(id: string) {
   });
 
   return capela;
+}
+
+export async function PegarCapelaPorEmail(email: string) {
+  const capela = prisma.capela.findFirst({
+    where: { email },
+  });
+
+  return capela
 }

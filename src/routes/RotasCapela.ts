@@ -3,6 +3,7 @@ import { CriarCapelaController } from "../controllers/capela/createCapelaControl
 import { DeleteCapelaController } from "../controllers/capela/deleteCapelaController";
 import { PegarCapelasController } from "../controllers/capela/getCapelasController";
 import { PegarUnicaCapelaController } from "../controllers/capela/getUniqueCapelaController";
+import { LoginCapela } from "../controllers/capela/loginCapela";
 import { AtualizarCapelaController } from "../controllers/capela/updateCapelaController";
 
 export const routerCapela = routes;
@@ -28,4 +29,9 @@ routerCapela.get(
 routerCapela.put(
   "/atualizar",
   async (req, res) => await AtualizarCapelaController({ req, res }),
+);
+
+routerCapela.post(
+  "/login",
+  async (req, res) => await LoginCapela({ req, res }),
 );

@@ -1,3 +1,4 @@
+import { fa } from "zod/v4/locales";
 import { prisma } from "../config/prisma";
 
 export async function VerificarExistenciaEmail(tabela: string, email: string) {
@@ -5,7 +6,5 @@ export async function VerificarExistenciaEmail(tabela: string, email: string) {
     where: { email },
   });
 
-  if (consulta) {
-    return "Email Existente no banco";
-  }
+  return consulta ? true : false;
 }
