@@ -1,17 +1,15 @@
 import { prisma } from "../../config/prisma";
 import { CapelaDTO } from "../../schemas/CapelaSchema";
 
-export async function CriarCapela(dadosCapela: CapelaDTO) {
+export async function CriarCapela(dadosCapela: CapelaDTO, senhaHash: string) {
   const capela = await prisma.capela.create({
     data: {
       email: dadosCapela.email,
       nome: dadosCapela.nome,
-      senha: dadosCapela.senha,
+      senha: senhaHash,
     },
   });
-
-  console.log("Dados capela: ", capela)
-
+  
   return capela;
 }
 

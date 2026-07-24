@@ -14,7 +14,7 @@ app.use(morgan("tiny"));
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
-app.use("/admin/", routerCapela);
+app.use("/capela/", routerCapela);
 
 // Inicialização do servidor.
 app.listen(port, () => {
