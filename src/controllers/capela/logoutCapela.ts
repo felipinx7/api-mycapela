@@ -3,9 +3,7 @@ import { expressDTO } from "../../interfaces/expressDTO";
 export async function LogoutCapela(express: expressDTO) {
   const valorToken = express.req.cookies.token;
 
-  console.log("Valor do token", valorToken);
-
-  if (valorToken === null || valorToken === undefined) {
+  if (valorToken.length === 0) {
     return express.res.status(401).send({
       status: 401,
       message: "Usuário não autenticado",
