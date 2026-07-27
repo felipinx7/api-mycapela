@@ -1,12 +1,12 @@
 import { prisma } from "../../config/prisma";
 import { UsuarioDTO } from "../../schemas/UsuarioSchema";
 
-export async function CriarUsuario(dadosUsuario: UsuarioDTO, IDCapela: string) {
+export async function CriarUsuario(dadosUsuario: UsuarioDTO, IDCapela: string, senhaHash: string) {
   const usuario = await prisma.usuario.create({
     data: {
       email: dadosUsuario.email,
       nome: dadosUsuario.nome,
-      senha: dadosUsuario.senha,
+      senha: senhaHash,
       tipoUsuario: dadosUsuario.TipoUsuario,
       idCapela: IDCapela,
     },
