@@ -14,16 +14,27 @@ export async function CriarCapela(dadosCapela: CapelaDTO, senhaHash: string) {
 }
 
 export async function AtualizarCapela(dadosCapela: CapelaDTO, id: string) {
-  const capela = await prisma.capela.update({
+  const dados: any = {};
+
+  if (dadosCapela.nome !== undefined) {
+    dados.nome = dadosCapela.nome;
+  }
+
+  if (dadosCapela.email !== undefined) {
+    dados.email = dadosCapela.email;
+  }
+
+  if (dadosCapela.senha !== undefined) {
+    dados.senha = dadosCapela.senha;
+  }
+
+  const dadodsParaAtualizar = await prisma.capela.update({
     where: { id },
-    data: {
-      nome: dadosCapela.nome,
-      email: dadosCapela.email,
-      senha: dadosCapela.senha,
-    },
+    data: dados,
   });
 
-  return capela;
+
+  return dadodsParaAtualizar
 }
 
 export async function PegarCapelas() {
@@ -53,5 +64,5 @@ export async function PegarCapelaPorEmail(email: string) {
     where: { email },
   });
 
-  return capela
+  return capela;
 }

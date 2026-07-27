@@ -18,11 +18,6 @@ export async function AtualizarCapelaController(express: expressDTO) {
     dadosAtualizados.id,
   );
 
-  const emailExistente = await VerificarExistenciaEmail(
-    "capela",
-    dadosAtualizados.email,
-  );
-
   if (capelaNaoExiste) {
     return express.res.status(404).send({
       status: 404,
@@ -30,11 +25,18 @@ export async function AtualizarCapelaController(express: expressDTO) {
     });
   }
 
-  if (emailExistente) {
-    return express.res.status(409).send({
-      status: 409,
-      message: "Email já cadastrado",
-    });
+  if (dadosAtualizados.email > 0) {
+    const emailExistente = await VerificarExistenciaEmail(
+      "capela",
+      dadosAtualizados.email,
+    );
+
+    if (emailExistente) {
+      return express.res.status(409).send({
+        status: 409,
+        message: "Email já cadastrado",
+      });
+    }
   }
 
   await AtualizarCapela(dadosAtualizados, dadosAtualizados.id);
