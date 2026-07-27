@@ -4,6 +4,7 @@ import { DeleteCapelaController } from "../controllers/capela/deleteCapelaContro
 import { PegarCapelasController } from "../controllers/capela/getCapelasController";
 import { PegarUnicaCapelaController } from "../controllers/capela/getUniqueCapelaController";
 import { LoginCapela } from "../controllers/capela/loginCapela";
+import { LogoutCapela } from "../controllers/capela/logoutCapela";
 import { AtualizarCapelaController } from "../controllers/capela/updateCapelaController";
 
 export const routerCapela = routes;
@@ -34,4 +35,9 @@ routerCapela.put(
 routerCapela.post(
   "/login",
   async (req, res) => await LoginCapela({ req, res }),
+);
+
+routerCapela.post(
+  "/logout",
+  async (req, res) => await LogoutCapela({ req, res }),
 );
