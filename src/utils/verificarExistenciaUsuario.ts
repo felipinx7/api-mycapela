@@ -5,7 +5,5 @@ export async function VerificarExistenciaUsuario(tabela: string, id: string) {
     where: { id },
   });
 
-  if (!usuario) {
-    return `${tabela} não foi encontrada.`;
-  }
+  return usuario ? true : false;
 }

@@ -1,7 +1,11 @@
 import { prisma } from "../../config/prisma";
 import { UsuarioDTO } from "../../schemas/UsuarioSchema";
 
-export async function CriarUsuario(dadosUsuario: UsuarioDTO, IDCapela: string, senhaHash: string) {
+export async function CriarUsuario(
+  dadosUsuario: UsuarioDTO,
+  IDCapela: string,
+  senhaHash: string,
+) {
   const usuario = await prisma.usuario.create({
     data: {
       email: dadosUsuario.email,
@@ -16,14 +20,24 @@ export async function CriarUsuario(dadosUsuario: UsuarioDTO, IDCapela: string, s
 }
 
 export async function AtualizarUsuario(id: string, dadosUsuario: UsuarioDTO) {
+  const dados: any = {};
+
+  if (dadosUsuario.TipoUsuario !== undefined) {
+    dados.tipoUsuario = dadosUsuario.TipoUsuario;
+  }
+  if (dadosUsuario.email !== undefined) {
+    dados.email = dadosUsuario.email;
+  }
+  if (dadosUsuario.nome !== undefined) {
+    dados.nome = dadosUsuario.nome;
+  }
+  if (dadosUsuario.senha !== undefined) {
+    dados.senha = dadosUsuario.senha;
+  }
+
   const usuario = await prisma.usuario.update({
     where: { id },
-    data: {
-      email: dadosUsuario.email,
-      nome: dadosUsuario.nome,
-      senha: dadosUsuario.senha,
-      tipoUsuario: dadosUsuario.TipoUsuario,
-    },
+    data: dados,
   });
 
   return usuario;

@@ -27,12 +27,12 @@ export async function CriarUsuarioController(express: expressDTO) {
     });
   }
 
-  const capelaNaoExiste = await VerificarExistenciaUsuario(
+  const capelaExiste = await VerificarExistenciaUsuario(
     "capela",
     dadosUsuario.idCapela,
   );
 
-  if (capelaNaoExiste) {
+  if (!capelaExiste) {
     return express.res.status(404).send({
       status: 404,
       message: "Capela não encontrada",

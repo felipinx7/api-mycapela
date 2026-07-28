@@ -17,7 +17,7 @@ app.use(cors());
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
-app.use("/capela/", routerCapela);
+app.use("/capela", routerCapela);
 app.use("/usuario", RotasUsuario);
 
 // Inicialização do servidor.
