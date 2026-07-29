@@ -3,7 +3,6 @@ import "dotenv";
 import jwt from "jsonwebtoken";
 import { expressDTO } from "../../interfaces/expressDTO";
 import { InterfaceLoginCapela } from "../../interfaces/interface-login";
-import { VerificarUsuarioLogado } from "../../middlewares/authMiddleware";
 import { PegarCapelaPorEmail } from "../../services/database/ICapelaRepository";
 import { VerificarExistenciaEmail } from "../../utils/verificarExistenciaEmail";
 
@@ -45,11 +44,10 @@ export async function LoginCapela(express: expressDTO) {
       path: "/capela",
     });
 
-    console.log(await VerificarUsuarioLogado());
     return express.res.status(201).send({
       status: 200,
       message: "Login realizado com sucesso",
-      data: token,
+      tipoUsuario: "CAPELA",
     });
   } else {
     express.res
