@@ -4,6 +4,9 @@ import { DeletarUsuarioController } from "../controllers/usuario/deleteUsuarioCo
 import { PegarUsuarioController } from "../controllers/usuario/getUniqueUsuario";
 import { PegarUsuariosController } from "../controllers/usuario/getUsuariosController";
 import { AtualizarUsuarioController } from "../controllers/usuario/updateUsuarioController";
+import { LoginUsuario } from "../controllers/usuario/loginUsuario";
+import { routerCapela } from "./RotasCapela";
+import { LogoutUsuario } from "../controllers/usuario/logoutUsuario";
 
 export const RotasUsuario = Router();
 
@@ -30,4 +33,14 @@ RotasUsuario.get(
 RotasUsuario.put(
   "/atualizar",
   async (req, res) => await AtualizarUsuarioController({ req, res }),
+);
+
+RotasUsuario.post(
+  "/login",
+  async (req, res) => await LoginUsuario({ req, res }),
+);
+
+RotasUsuario.post(
+  "/logout",
+  async (req, res) => await LogoutUsuario({ req, res }),
 );

@@ -63,3 +63,11 @@ export async function DeletarUsuario(id: string) {
 
   return usuario;
 }
+
+export async function PegarUsuarioPorEmail(email: string) {
+  const dadosUsuario = await prisma.usuario.findUnique({
+    where: { email },
+  });
+
+  return dadosUsuario;
+}
