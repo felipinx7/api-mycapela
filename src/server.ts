@@ -6,6 +6,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { routerCapela } from "./routes/RotasCapela";
 import { RotasUsuario } from "./routes/RotasUsuario";
+import { RotasCategorias } from "./routes/RotasCategoria";
 
 // variaveis de configurações.
 export const app = express();
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use("/capela", routerCapela);
 app.use("/usuario", RotasUsuario);
+app.use("/categoria", RotasCategorias)
 
 // Inicialização do servidor.
 app.listen(port, () => {
