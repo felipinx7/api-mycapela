@@ -8,36 +8,10 @@ import { LogoutCapela } from "../controllers/capela/logoutCapela";
 import { AtualizarCapelaController } from "../controllers/capela/updateCapelaController";
 
 export const routerCapela = routes;
-routerCapela.post(
-  "/criar",
-  async (req, res) => await CriarCapelaController({ req, res }),
-);
-routerCapela.delete(
-  "/deletar",
-  async (req, res) => await DeleteCapelaController({ req, res }),
-);
-
-routerCapela.get(
-  "/pegar",
-  async (req, res) => await PegarUnicaCapelaController({ req, res }),
-);
-
-routerCapela.get(
-  "/pegar-todas",
-  async (req, res) => await PegarCapelasController({ req, res }),
-);
-
-routerCapela.put(
-  "/atualizar",
-  async (req, res) => await AtualizarCapelaController({ req, res }),
-);
-
-routerCapela.post(
-  "/login",
-  async (req, res) => await LoginCapela({ req, res }),
-);
-
-routerCapela.post(
-  "/logout",
-  async (req, res) => await LogoutCapela({ req, res }),
-);
+routerCapela.post("/criar", async (req, res) => await CriarCapelaController({ req, res }));
+routerCapela.delete("/deletar", async (req, res) => await DeleteCapelaController({ req, res }));
+routerCapela.get("/pegar", async (req, res) => await PegarUnicaCapelaController({ req, res }));
+routerCapela.get("/pegar-todas", async (req, res) => await PegarCapelasController({ req, res }));
+routerCapela.put("/atualizar", async (req, res) => await AtualizarCapelaController({ req, res }));
+routerCapela.post("/login", async (req, res) => await LoginCapela({ req, res }));
+routerCapela.post("/logout", async (req, res) => await LogoutCapela({ req, res }));
