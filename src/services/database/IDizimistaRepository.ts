@@ -1,10 +1,7 @@
 import { prisma } from "../../config/prisma";
 import { DizimistaDTO } from "../../schemas/DizimistaSchema";
 
-export async function CriarDizimista(
-  dadosDizimista: DizimistaDTO,
-  IDCapela: string,
-) {
+export async function CriarDizimista(dadosDizimista: DizimistaDTO, IDCapela: string) {
   const dizimista = await prisma.dizimista.create({
     data: {
       nome: dadosDizimista.nome,
@@ -15,10 +12,7 @@ export async function CriarDizimista(
   return dizimista;
 }
 
-export async function AtualizarDizimista(
-  id: string,
-  dadosDizimista: DizimistaDTO,
-) {
+export async function AtualizarDizimista(id: string, dadosDizimista: DizimistaDTO) {
   const dizimista = await prisma.dizimista.update({
     where: { id },
     data: {
@@ -46,6 +40,14 @@ export async function PegarDizimistas() {
 export async function DeletarDizimista(id: string) {
   const dizimista = await prisma.dizimista.delete({
     where: { id },
+  });
+
+  return dizimista;
+}
+
+export async function PegarDizimistaPorNome(nome: string) {
+  const dizimista = await prisma.dizimista.findFirst({
+    where: { nome },
   });
 
   return dizimista;

@@ -7,6 +7,7 @@ import morgan from "morgan";
 import { routerCapela } from "./routes/RotasCapela";
 import { RotasUsuario } from "./routes/RotasUsuario";
 import { RotasCategorias } from "./routes/RotasCategoria";
+import { RotasDizimistas } from "./routes/RotasDizimista";
 
 // variaveis de configurações.
 export const app = express();
@@ -21,6 +22,8 @@ app.use(cookieParser(process.env.JWT_SECRET));
 app.use("/capela", routerCapela);
 app.use("/usuario", RotasUsuario);
 app.use("/categoria", RotasCategorias)
+app.use("/dizimista", RotasDizimistas)
+
 
 // Inicialização do servidor.
 app.listen(port, () => {
