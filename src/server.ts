@@ -4,13 +4,13 @@ import "dotenv/config";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-import { routerCapela } from "./routes/RotasCapela";
 import { RotasCategorias } from "./routes/RotasCategoria";
 import { RotasDizimistas } from "./routes/RotasDizimista";
 import { RotasEntradaDizimo } from "./routes/RotasEntradaDizimo";
 import { RotasGastosCapela } from "./routes/RotasGastosCapela";
 import { RotasOfertorio } from "./routes/RotasOfertorio";
 import { RotasUsuario } from "./routes/RotasUsuario";
+import { routerCapela } from "./routes/RotasCapela";
 
 // variaveis de configurações.
 export const app = express();
