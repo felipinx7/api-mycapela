@@ -5,9 +5,12 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import { routerCapela } from "./routes/RotasCapela";
-import { RotasUsuario } from "./routes/RotasUsuario";
 import { RotasCategorias } from "./routes/RotasCategoria";
 import { RotasDizimistas } from "./routes/RotasDizimista";
+import { RotasEntradaDizimo } from "./routes/RotasEntradaDizimo";
+import { RotasGastosCapela } from "./routes/RotasGastosCapela";
+import { RotasOfertorio } from "./routes/RotasOfertorio";
+import { RotasUsuario } from "./routes/RotasUsuario";
 
 // variaveis de configurações.
 export const app = express();
@@ -21,9 +24,11 @@ app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use("/capela", routerCapela);
 app.use("/usuario", RotasUsuario);
-app.use("/categoria", RotasCategorias)
-app.use("/dizimista", RotasDizimistas)
-
+app.use("/categoria", RotasCategorias);
+app.use("/dizimista", RotasDizimistas);
+app.use("/gastos-capela", RotasGastosCapela);
+app.use("/ofertorio", RotasOfertorio);
+app.use("/entrada-dizimo", RotasEntradaDizimo);
 
 // Inicialização do servidor.
 app.listen(port, () => {
