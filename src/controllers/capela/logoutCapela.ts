@@ -1,12 +1,14 @@
 import { expressDTO } from "../../interfaces/expressDTO";
+import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 
 export async function LogoutCapela(express: expressDTO) {
   const valorToken = express.req.cookies.token;
 
   if (valorToken.length === 0) {
-    return express.res.status(401).send({
-      status: 401,
+    return RespostasDasRequisicoes({
       message: "Usuário não autenticado",
+      status: 401,
+      express: express,
     });
   }
 
@@ -16,8 +18,9 @@ export async function LogoutCapela(express: expressDTO) {
     sameSite: "strict",
   });
 
-  return express.res.status(200).send({
-    status: 200,
+  return RespostasDasRequisicoes({
     message: "Logot realizado com sucesso",
+    status: 200,
+    express: express,
   });
 }

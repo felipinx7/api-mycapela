@@ -2,17 +2,19 @@ import bcrypt from "bcrypt";
 import "dotenv";
 import jwt from "jsonwebtoken";
 import { expressDTO } from "../../interfaces/expressDTO";
-import { InterfaceLoginCapela } from "../../interfaces/interface-login";
+import { InterfaceLoginCapela } from "../../interfaces/interfaceLogin";
 import { PegarCapelaPorEmail } from "../../services/database/ICapelaRepository";
+import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 import { VerificarExistenciaEmail } from "../../utils/verificarExistenciaEmail";
 
 export async function LoginCapela(express: expressDTO) {
   const dados: InterfaceLoginCapela = express.req.body;
 
   if (!dados.email || !dados.senha) {
-    return express.res.status(400).send({
-      status: 400,
+    return RespostasDasRequisicoes({
       message: "você precisar preencher os campos",
+      status: 400,
+      express: express,
     });
   }
 
@@ -20,23 +22,17 @@ export async function LoginCapela(express: expressDTO) {
   const dadosCapela = await PegarCapelaPorEmail(dados.email);
 
   if (!emailExistente) {
-    return express.res.status(404).send({
-      status: 400,
+    return RespostasDasRequisicoes({
       message: "email inválido",
+      status: 404,
+      express: express,
     });
   }
 
-  const senhaValida = await bcrypt.compare(
-    dados.senha,
-    dadosCapela?.senha as string,
-  );
+  const senhaValida = await bcrypt.compare(dados.senha, dadosCapela?.senha as string);
 
   if (emailExistente === true && senhaValida === true) {
-    const token = jwt.sign(
-      { email: dados.email, senha: dados.senha },
-      process.env.JWT_SECRET as string,
-      { expiresIn: "2h" },
-    );
+    const token = jwt.sign({ email: dados.email, senha: dados.senha }, process.env.JWT_SECRET as string, { expiresIn: "2h" });
 
     express.res.cookie("token", token, {
       httpOnly: true,
@@ -44,14 +40,17 @@ export async function LoginCapela(express: expressDTO) {
       path: "/capela",
     });
 
-    return express.res.status(201).send({
-      status: 200,
+    return RespostasDasRequisicoes({
       message: "Login realizado com sucesso",
-      tipoUsuario: "CAPELA",
+      status: 200,
+      data: { tipoUsuario: "CAPELA" },
+      express: express,
     });
   } else {
-    express.res
-      .status(401)
-      .send({ status: 401, message: "Credenciais inválidas" });
+    return RespostasDasRequisicoes({
+      message: "Credenciais inválidas",
+      status: 401,
+      express: express,
+    });
   }
 }

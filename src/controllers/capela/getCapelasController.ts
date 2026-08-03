@@ -1,12 +1,14 @@
 import { expressDTO } from "../../interfaces/expressDTO";
 import { PegarCapelas } from "../../services/database/ICapelaRepository";
+import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 
 export async function PegarCapelasController(express: expressDTO) {
   const dadosCapela = await PegarCapelas();
 
-  return express.res.status(200).send({
-    status: 200,
+  return RespostasDasRequisicoes({
     message: "Capelas Encontrada",
+    status: 200,
     data: dadosCapela,
+    express: express,
   });
 }
