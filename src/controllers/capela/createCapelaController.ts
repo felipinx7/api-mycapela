@@ -3,16 +3,19 @@ import { randomInt } from "node:crypto";
 import { expressDTO } from "../../interfaces/expressDTO";
 import { CapelaDTO } from "../../schemas/CapelaSchema";
 import { CriarCapela } from "../../services/database/ICapelaRepository";
+import { RespstaDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 import { VerificarExistenciaEmail } from "../../utils/verificarExistenciaEmail";
 
 export async function CriarCapelaController(express: expressDTO) {
   const dados: CapelaDTO = express.req.body;
 
-  if (!dados.email || !dados.nome || !dados.senha)
-    return express.res.status(400).send({
-      status: 400,
-      message: "Você precisa preencher todos os campos.",
+  if (!dados.email || !dados.nome || !dados.senha) {
+    return RespstaDasRequisicoes({
+      message: "Você precisar preeencher todos os campos!!",
+      status: 409,
+      express: express,
     });
+  }
 
   const emailExistente = await VerificarExistenciaEmail("capela", dados.email);
 
