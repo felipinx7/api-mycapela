@@ -3,6 +3,6 @@ import { expressDTO } from "./expressDTO";
 export interface InterfaceDadosRespostaDasRequisicoes {
   status: number;
   message: string;
-  data?: any[];
+  data?: any;
   express?: expressDTO;
 }

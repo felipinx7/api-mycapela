@@ -1,4 +1,4 @@
-import { InterfaceDadosRespostaDasRequisicoes } from "../interfaces/DadosRespostaDasRequisicoes";
+import { InterfaceDadosRespostaDasRequisicoes } from "../interfaces/InterfaceDadosRespostaDasRequisicoes";
 
 export function RespostasDasRequisicoes({ message, status, data, express }: InterfaceDadosRespostaDasRequisicoes) {
   if (data === undefined) {
