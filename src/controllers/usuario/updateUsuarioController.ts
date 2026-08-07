@@ -3,6 +3,7 @@ import { expressDTO } from "../../interfaces/expressDTO";
 import { AtualizarUsuario } from "../../services/database/IUsuarioRepository";
 import { VerificarExistenciaEmail } from "../../utils/verificarExistenciaEmail";
 import { VerificarExistenciaUsuario } from "../../utils/verificarExistenciaUsuario";
+import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 
 export async function AtualizarUsuarioController(express: expressDTO) {
   const dadosAtualizar = express.req.body;
@@ -14,9 +15,10 @@ export async function AtualizarUsuarioController(express: expressDTO) {
     !dadosAtualizar.email &&
     !dadosAtualizar.TipoUsuario
   ) {
-    return express.res.status(401).send({
+    return RespostasDasRequisicoes({
       status: 401,
       message: "você precisa preencher os dados",
+      express,
     });
   }
 
@@ -27,9 +29,10 @@ export async function AtualizarUsuarioController(express: expressDTO) {
     );
 
     if (emailExistente) {
-      return express.res.status(401).send({
+      return RespostasDasRequisicoes({
         status: 401,
         message: "email já cadastrado",
+        express,
       });
     }
   }
@@ -40,23 +43,26 @@ export async function AtualizarUsuarioController(express: expressDTO) {
   );
 
   if (!usuarioExistente) {
-    return express.res.status(404).send({
+    return RespostasDasRequisicoes({
       status: 404,
       message: "Usuário Não encontrado",
+      express,
     });
   }
 
   if (!Object.values(TipoUsuario).includes(dadosAtualizar.tipoUsuario)) {
-    return express.res.status(404).send({
+    return RespostasDasRequisicoes({
       status: 404,
       message: "Tipo de usuário inválido",
+      express,
     });
   }
 
   await AtualizarUsuario(dadosAtualizar.id, dadosAtualizar);
 
-  return express.res.status(200).send({
+  return RespostasDasRequisicoes({
     status: 200,
     message: "Usuário atualizado com sucesso",
+    express,
   });
 }

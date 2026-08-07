@@ -4,6 +4,7 @@ import { expressDTO } from "../../interfaces/expressDTO";
 import { CriarUsuario } from "../../services/database/IUsuarioRepository";
 import { VerificarExistenciaEmail } from "../../utils/verificarExistenciaEmail";
 import { VerificarExistenciaUsuario } from "../../utils/verificarExistenciaUsuario";
+import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 
 export async function CriarUsuarioController(express: expressDTO) {
   const dadosUsuario = express.req.body;
@@ -14,16 +15,18 @@ export async function CriarUsuarioController(express: expressDTO) {
     !dadosUsuario.nome ||
     !dadosUsuario.senha
   ) {
-    return express.res.status(401).send({
+    return RespostasDasRequisicoes({
       status: 401,
       message: "Você precisa preencher todos os daods",
+      express,
     });
   }
 
   if (!dadosUsuario.idCapela) {
-    return express.res.status(404).send({
+    return RespostasDasRequisicoes({
       status: 404,
       message: "você precisar passar o ID da capela",
+      express,
     });
   }
 
@@ -33,9 +36,10 @@ export async function CriarUsuarioController(express: expressDTO) {
   );
 
   if (!capelaExiste) {
-    return express.res.status(404).send({
+    return RespostasDasRequisicoes({
       status: 404,
       message: "Capela não encontrada",
+      express,
     });
   }
 
@@ -45,9 +49,10 @@ export async function CriarUsuarioController(express: expressDTO) {
   );
 
   if (emailExistente) {
-    return express.res.status(409).send({
+    return RespostasDasRequisicoes({
       status: 409,
       message: "Email já cadastrado",
+      express,
     });
   }
 
@@ -55,9 +60,10 @@ export async function CriarUsuarioController(express: expressDTO) {
     dadosUsuario.TipoUsuario !== "ADMINISTRADOR" &&
     dadosUsuario.TipoUsuario !== "USUARIO"
   ) {
-    return express.res.status(500).send({
+    return RespostasDasRequisicoes({
       status: 500,
       message: "Tipo de usuário inválido",
+      express,
     });
   }
 
@@ -65,9 +71,10 @@ export async function CriarUsuarioController(express: expressDTO) {
   const senhaHash = await bcrypt.hash(dadosUsuario.senha, saltHash);
 
   await CriarUsuario(dadosUsuario, dadosUsuario.idCapela, senhaHash);
-  return express.res.status(201).send({
+  return RespostasDasRequisicoes({
     status: 201,
     message: "Usuario criado com sucesso",
     data: dadosUsuario,
+    express,
   });
 }

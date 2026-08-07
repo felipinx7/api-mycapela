@@ -1,12 +1,14 @@
 import { expressDTO } from "../../interfaces/expressDTO";
+import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 
 export async function LogoutUsuario(express: expressDTO) {
   const tokenUsuario = express.req.cookies.token;
 
   if (tokenUsuario === 0) {
-    return express.res.status(404).send({
+    return RespostasDasRequisicoes({
       status: 404,
       message: "Usuário não autenticado",
+      express,
     });
   }
 
@@ -16,8 +18,9 @@ export async function LogoutUsuario(express: expressDTO) {
     sameSite: "strict",
   });
 
-  return express.res.status(200).send({
+  return RespostasDasRequisicoes({
     status: 200,
     message: "Logout realizado com sucesso",
+    express,
   });
 }

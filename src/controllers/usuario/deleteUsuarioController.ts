@@ -1,21 +1,24 @@
 import { expressDTO } from "../../interfaces/expressDTO";
 import { DeletarUsuario } from "../../services/database/IUsuarioRepository";
 import { VerificarExistenciaUsuario } from "../../utils/verificarExistenciaUsuario";
+import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 
 export async function DeletarUsuarioController(express: expressDTO) {
   const usuario = express.req.body;
 
   if (!usuario.id) {
-    return express.res.status(400).send({
+    return RespostasDasRequisicoes({
       status: 400,
       message: "você precisa passar um ID",
+      express,
     });
   }
   
   if (usuario.TipoUsuario === "USUARIO") {
-    return express.res.status(403).send({
+    return RespostasDasRequisicoes({
       status: 403,
       message: "você não tem permissão pra isso",
+      express,
     });
   }
 
@@ -25,16 +28,18 @@ export async function DeletarUsuarioController(express: expressDTO) {
   );
 
   if (!usuarioExistente) {
-    return express.res.status(404).send({
+    return RespostasDasRequisicoes({
       status: 404,
       message: "Usuário não encontrado",
+      express,
     });
   }
 
   await DeletarUsuario(usuario.id);
 
-  return express.res.status(200).send({
+  return RespostasDasRequisicoes({
     status: 200,
     message: "usuário deletado com sucesso",
+    express,
   });
 }
