@@ -1,7 +1,7 @@
 import { expressDTO } from "../../interfaces/expressDTO";
 import { PegarUsuario } from "../../services/database/IUsuarioRepository";
-import { VerificarExistenciaUsuario } from "../../utils/verificarExistenciaUsuario";
 import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
+import { VerificarExistenciaUsuario } from "../../utils/verificarExistenciaUsuario";
 
 export async function PegarUsuarioController(express: expressDTO) {
   const dadosUsuario = express.req.body;
@@ -22,10 +22,7 @@ export async function PegarUsuarioController(express: expressDTO) {
     });
   }
 
-  const usuarioExistente = await VerificarExistenciaUsuario(
-    "usuario",
-    dadosUsuario.id,
-  )
+  const usuarioExistente = await VerificarExistenciaUsuario("usuario", dadosUsuario.id);
 
   if (!usuarioExistente) {
     return RespostasDasRequisicoes({

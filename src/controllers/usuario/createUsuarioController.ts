@@ -2,19 +2,14 @@ import bcrypt from "bcrypt";
 import { randomInt } from "node:crypto";
 import { expressDTO } from "../../interfaces/expressDTO";
 import { CriarUsuario } from "../../services/database/IUsuarioRepository";
+import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 import { VerificarExistenciaEmail } from "../../utils/verificarExistenciaEmail";
 import { VerificarExistenciaUsuario } from "../../utils/verificarExistenciaUsuario";
-import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 
 export async function CriarUsuarioController(express: expressDTO) {
   const dadosUsuario = express.req.body;
 
-  if (
-    !dadosUsuario.TipoUsuario ||
-    !dadosUsuario.email ||
-    !dadosUsuario.nome ||
-    !dadosUsuario.senha
-  ) {
+  if (!dadosUsuario.TipoUsuario || !dadosUsuario.email || !dadosUsuario.nome || !dadosUsuario.senha) {
     return RespostasDasRequisicoes({
       status: 401,
       message: "Você precisa preencher todos os daods",
@@ -30,10 +25,7 @@ export async function CriarUsuarioController(express: expressDTO) {
     });
   }
 
-  const capelaExiste = await VerificarExistenciaUsuario(
-    "capela",
-    dadosUsuario.idCapela,
-  );
+  const capelaExiste = await VerificarExistenciaUsuario("capela", dadosUsuario.idCapela);
 
   if (!capelaExiste) {
     return RespostasDasRequisicoes({
@@ -43,10 +35,7 @@ export async function CriarUsuarioController(express: expressDTO) {
     });
   }
 
-  const emailExistente = await VerificarExistenciaEmail(
-    "usuario",
-    dadosUsuario.email,
-  );
+  const emailExistente = await VerificarExistenciaEmail("usuario", dadosUsuario.email);
 
   if (emailExistente) {
     return RespostasDasRequisicoes({
@@ -56,10 +45,7 @@ export async function CriarUsuarioController(express: expressDTO) {
     });
   }
 
-  if (
-    dadosUsuario.TipoUsuario !== "ADMINISTRADOR" &&
-    dadosUsuario.TipoUsuario !== "USUARIO"
-  ) {
+  if (dadosUsuario.TipoUsuario !== "ADMINISTRADOR" && dadosUsuario.TipoUsuario !== "USUARIO") {
     return RespostasDasRequisicoes({
       status: 500,
       message: "Tipo de usuário inválido",

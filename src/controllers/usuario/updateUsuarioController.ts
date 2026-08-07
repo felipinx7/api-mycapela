@@ -1,20 +1,16 @@
 import { TipoUsuario } from "../../../generated/prisma/enums";
 import { expressDTO } from "../../interfaces/expressDTO";
 import { AtualizarUsuario } from "../../services/database/IUsuarioRepository";
+import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 import { VerificarExistenciaEmail } from "../../utils/verificarExistenciaEmail";
 import { VerificarExistenciaUsuario } from "../../utils/verificarExistenciaUsuario";
-import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 
 export async function AtualizarUsuarioController(express: expressDTO) {
   const dadosAtualizar = express.req.body;
 
   console.log("Data for update: ", dadosAtualizar);
 
-  if (
-    !dadosAtualizar.nome &&
-    !dadosAtualizar.email &&
-    !dadosAtualizar.TipoUsuario
-  ) {
+  if (!dadosAtualizar.nome && !dadosAtualizar.email && !dadosAtualizar.TipoUsuario) {
     return RespostasDasRequisicoes({
       status: 401,
       message: "você precisa preencher os dados",
@@ -23,10 +19,7 @@ export async function AtualizarUsuarioController(express: expressDTO) {
   }
 
   if (dadosAtualizar.email > 0) {
-    const emailExistente = await VerificarExistenciaEmail(
-      "usuario",
-      dadosAtualizar.email,
-    );
+    const emailExistente = await VerificarExistenciaEmail("usuario", dadosAtualizar.email);
 
     if (emailExistente) {
       return RespostasDasRequisicoes({
@@ -37,10 +30,7 @@ export async function AtualizarUsuarioController(express: expressDTO) {
     }
   }
 
-  const usuarioExistente = await VerificarExistenciaUsuario(
-    "usuario",
-    dadosAtualizar.id,
-  );
+  const usuarioExistente = await VerificarExistenciaUsuario("usuario", dadosAtualizar.id);
 
   if (!usuarioExistente) {
     return RespostasDasRequisicoes({

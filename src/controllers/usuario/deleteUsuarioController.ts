@@ -1,7 +1,7 @@
 import { expressDTO } from "../../interfaces/expressDTO";
 import { DeletarUsuario } from "../../services/database/IUsuarioRepository";
-import { VerificarExistenciaUsuario } from "../../utils/verificarExistenciaUsuario";
 import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
+import { VerificarExistenciaUsuario } from "../../utils/verificarExistenciaUsuario";
 
 export async function DeletarUsuarioController(express: expressDTO) {
   const usuario = express.req.body;
@@ -13,7 +13,7 @@ export async function DeletarUsuarioController(express: expressDTO) {
       express,
     });
   }
-  
+
   if (usuario.TipoUsuario === "USUARIO") {
     return RespostasDasRequisicoes({
       status: 403,
@@ -22,10 +22,7 @@ export async function DeletarUsuarioController(express: expressDTO) {
     });
   }
 
-  const usuarioExistente = await VerificarExistenciaUsuario(
-    "usuario",
-    usuario.id,
-  );
+  const usuarioExistente = await VerificarExistenciaUsuario("usuario", usuario.id);
 
   if (!usuarioExistente) {
     return RespostasDasRequisicoes({

@@ -4,8 +4,8 @@ import jwt from "jsonwebtoken";
 import { expressDTO } from "../../interfaces/expressDTO";
 import { InterfaceLoginCapela } from "../../interfaces/interface-login";
 import { PegarUsuarioPorEmail } from "../../services/database/IUsuarioRepository";
-import { VerificarExistenciaEmail } from "../../utils/verificarExistenciaEmail";
 import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
+import { VerificarExistenciaEmail } from "../../utils/verificarExistenciaEmail";
 
 export async function LoginUsuario(express: expressDTO) {
   const dados: InterfaceLoginCapela = express.req.body;
@@ -29,10 +29,7 @@ export async function LoginUsuario(express: expressDTO) {
     });
   }
 
-  const senhaHash = await bcrypt.compare(
-    dados.senha,
-    dadosUsuario?.senha as string,
-  );
+  const senhaHash = await bcrypt.compare(dados.senha, dadosUsuario?.senha as string);
 
   if (senhaHash === false) {
     return RespostasDasRequisicoes({
