@@ -1,13 +1,15 @@
 import { expressDTO } from "../../interfaces/expressDTO";
 import { PegarDizimistas } from "../../services/database/IDizimistaRepository";
+import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 
 export async function PegarDizimistasController(express: expressDTO) {
   const dados = express.req.body;
 
   const dizimistas = await PegarDizimistas();
-  return express.res.status(200).send({
-    status: 200,
+  return RespostasDasRequisicoes({
     message: "dizimistas encontrados",
-    dados: dizimistas,
+    status: 200,
+    data: dizimistas,
+    express: express,
   });
 }

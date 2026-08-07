@@ -1,5 +1,6 @@
 import { expressDTO } from "../../interfaces/expressDTO";
 import { CriarDizimista } from "../../services/database/IDizimistaRepository";
+import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 import { VerificarExistenciaDizimistaPorNome } from "../../utils/verificarExistenciaDizimistaPorNome";
 import { VerificarExistenciaUsuario } from "../../utils/verificarExistenciaUsuario";
 
@@ -9,36 +10,41 @@ export async function CriarDizimistaController(express: expressDTO) {
   const usuarioExistente = await VerificarExistenciaDizimistaPorNome(dadosDizimistas.nome);
 
   if (dadosDizimistas.nome.length === 0) {
-    return express.res.status(401).send({
-      status: 401,
+    return RespostasDasRequisicoes({
       message: "É necessário informar um nome válido.",
+      status: 401,
+      express: express,
     });
   }
 
   if (dadosDizimistas.tipoUsuario === "USUARIO") {
-    return express.res.status(403).send({
-      status: 403,
+    return RespostasDasRequisicoes({
       message: "O tipo de usuário informado não é permitido para esta operação.",
+      status: 403,
+      express: express,
     });
   }
 
   if (capelaExistente === false) {
-    return express.res.status(404).send({
-      status: 404,
+    return RespostasDasRequisicoes({
       message: "o ID da capela informada não foi encontrada.",
+      status: 404,
+      express: express,
     });
   }
 
   if (usuarioExistente === true) {
-    return express.res.status(409).send({
-      status: 409,
+    return RespostasDasRequisicoes({
       message: "Dizimista já cadastrado",
+      status: 409,
+      express: express,
     });
   }
 
   await CriarDizimista(dadosDizimistas, dadosDizimistas.idCapela);
-  return express.res.status(200).send({
-    status: 200,
+  return RespostasDasRequisicoes({
     message: "Dizimista criado com sucesso",
+    status: 200,
+    express: express,
   });
 }

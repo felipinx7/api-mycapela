@@ -1,5 +1,6 @@
 import { expressDTO } from "../../interfaces/expressDTO";
 import { PegarDizimista } from "../../services/database/IDizimistaRepository";
+import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 import { VerificarExistenciaUsuario } from "../../utils/verificarExistenciaUsuario";
 
 export async function PegarDizimistaController(express: expressDTO) {
@@ -7,23 +8,26 @@ export async function PegarDizimistaController(express: expressDTO) {
   const dizimistaExistente = await VerificarExistenciaUsuario("dizimista", dados.id);
 
   if (dados.id.length === 0) {
-    return express.res.status(400).send({
-      status: 400,
+    return RespostasDasRequisicoes({
       message: "você precisa informar um ID",
+      status: 400,
+      express: express,
     });
   }
 
   if (dizimistaExistente === false) {
-    return express.res.status(404).send({
-      status: 404,
+    return RespostasDasRequisicoes({
       message: "usuário não econtrado",
+      status: 404,
+      express: express,
     });
   }
   const dadosDizimista = await PegarDizimista(dados.id);
 
-  return express.res.status(200).send({
-    status: 200,
+  return RespostasDasRequisicoes({
     message: "Dizimista econtrado",
-    dados: dadosDizimista,
+    status: 200,
+    data: dadosDizimista,
+    express: express,
   });
 }
