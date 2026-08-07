@@ -1,40 +1,45 @@
 import { expressDTO } from "../../interfaces/expressDTO";
 import { CriarOfertorio } from "../../services/database/IOfertorioRepository";
+import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 import { VerificarExistenciaUsuario } from "../../utils/verificarExistenciaUsuario";
 
 export async function CriarOfertorioController(express: expressDTO) {
   const dados = express.req.body;
 
   if (!dados.idCapela || !dados.idUsuario || !dados.valor || !dados.data) {
-    return express.res.status(400).send({
+    return RespostasDasRequisicoes({
       status: 400,
       message: "Você precisa informar idCapela, idUsuario, valor e data",
+      express,
     });
   }
 
   const capelaExistente = await VerificarExistenciaUsuario("capela", dados.idCapela);
 
   if (!capelaExistente) {
-    return express.res.status(404).send({
+    return RespostasDasRequisicoes({
       status: 404,
       message: "Capela não encontrada",
+      express,
     });
   }
 
   const usuarioExistente = await VerificarExistenciaUsuario("usuario", dados.idUsuario);
 
   if (!usuarioExistente) {
-    return express.res.status(404).send({
+    return RespostasDasRequisicoes({
       status: 404,
       message: "Usuário não encontrado",
+      express,
     });
   }
 
   await CriarOfertorio(dados, dados.idCapela, dados.idUsuario);
 
-  return express.res.status(201).send({
+  return RespostasDasRequisicoes({
     status: 201,
     message: "Ofertório criado com sucesso",
     dados,
+    express,
   });
 }
