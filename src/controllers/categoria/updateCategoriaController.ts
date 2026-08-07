@@ -1,5 +1,6 @@
 import { expressDTO } from "../../interfaces/expressDTO";
 import { AtualizarCategoria } from "../../services/database/ICategoriaRepository";
+import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 import { VerificarExistenciaCategoria } from "../../utils/verificarExistenciaCategoria";
 import { VerificarExistenciaCategoriaPorID } from "../../utils/verificarExistenciaCategoriaPorID";
 
@@ -9,30 +10,34 @@ export async function AtualizarCategoriaController(express: expressDTO) {
   const categoriaExistente = await VerificarExistenciaCategoriaPorID(dadosCategoria.id);
 
   if (dadosCategoria.nome.length === 0 || dadosCategoria.id.length.length === 0) {
-    return express.res.status(401).send({
-      status: 401,
+    return RespostasDasRequisicoes({
       message: "você precisa passar um nome",
+      status: 401,
+      express: express,
     });
   }
 
   if (categoriaExistente === false) {
-    return express.res.status(404).send({
+    return RespostasDasRequisicoes({
+      message: "categoria não encontrada",
       status: 404,
-      messaage: "categoria não encontrada",
+      express: express,
     });
   }
 
   if (nomeCategoriaExistente === true) {
-    return express.res.status(409).send({
+    return RespostasDasRequisicoes({
+      message: "categoria já existente",
       status: 409,
-      messaage: "categoria já existente",
+      express: express,
     });
   }
 
   console.log("DADOS RECEBIDOS: ", dadosCategoria);
   await AtualizarCategoria(dadosCategoria.id, dadosCategoria);
-  return express.res.status(200).send({
-    status: 200,
+  return RespostasDasRequisicoes({
     message: "categoria atualizada com sucesso",
+    status: 200,
+    express: express,
   });
 }

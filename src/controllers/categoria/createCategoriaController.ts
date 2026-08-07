@@ -1,5 +1,6 @@
 import { expressDTO } from "../../interfaces/expressDTO";
 import { CriarCategoria } from "../../services/database/ICategoriaRepository";
+import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 import { VerificarExistenciaCategoria } from "../../utils/verificarExistenciaCategoria";
 import { VerificarExistenciaUsuario } from "../../utils/verificarExistenciaUsuario";
 
@@ -9,30 +10,34 @@ export async function CriarCategoriaController(express: expressDTO) {
   const categoriaExistente = await VerificarExistenciaCategoria(dadosCategoria.nome);
 
   if (dadosCategoria.nome.length === 0 || dadosCategoria.idCapela.idCapela) {
-    return express.res.status(401).send({
-      status: 401,
+    return RespostasDasRequisicoes({
       message: "Você precisar passar um nome pra categoria",
+      status: 401,
+      express: express,
     });
   }
 
   if (capelaExistente === false) {
-    return express.res.status(404).send({
-      status: 404,
+    return RespostasDasRequisicoes({
       message: "Capela não encontrada",
+      status: 404,
+      express: express,
     });
   }
 
   if (categoriaExistente === true) {
-    return express.res.status(409).send({
-      status: 409,
+    return RespostasDasRequisicoes({
       message: "Categoria já existente",
+      status: 409,
+      express: express,
     });
   }
 
   await CriarCategoria(dadosCategoria, dadosCategoria.idCapela);
-  return express.res.status(200).send({
-    status: 200,
+  return RespostasDasRequisicoes({
     message: "Categoria criada com sucesso",
-    dados: dadosCategoria,
+    status: 200,
+    data: dadosCategoria,
+    express: express,
   });
 }

@@ -1,5 +1,6 @@
 import { expressDTO } from "../../interfaces/expressDTO";
 import { PegarCategoria } from "../../services/database/ICategoriaRepository";
+import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 import { VerificarExistenciaCategoriaPorID } from "../../utils/verificarExistenciaCategoriaPorID";
 
 export async function PegarCategoriaController(express: expressDTO) {
@@ -7,24 +8,27 @@ export async function PegarCategoriaController(express: expressDTO) {
   const categoriaExistente = await VerificarExistenciaCategoriaPorID(dadosCategoria.id);
 
   if (dadosCategoria.id.length === 0) {
-    return express.res.status(401).send({
-      status: 401,
+    return RespostasDasRequisicoes({
       message: "você precisar passar um ID",
+      status: 401,
+      express: express,
     });
   }
 
   if (categoriaExistente === false) {
-    return express.res.status(404).send({
-      status: 404,
+    return RespostasDasRequisicoes({
       message: "categoria não encontrada",
+      status: 404,
+      express: express,
     });
   }
 
   const dadosUsuario = await PegarCategoria(dadosCategoria.id);
 
-  return express.res.status(200).send({
-    status: 200,
+  return RespostasDasRequisicoes({
     message: "Categoria econtrada",
+    status: 200,
     data: dadosUsuario,
+    express: express,
   });
 }

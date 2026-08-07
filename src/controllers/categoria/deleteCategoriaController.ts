@@ -1,5 +1,6 @@
 import { expressDTO } from "../../interfaces/expressDTO";
 import { DeletarCategoria } from "../../services/database/ICategoriaRepository";
+import { RespostasDasRequisicoes } from "../../utils/ResposeDasRequisicoes";
 import { VerificarExistenciaCategoriaPorID } from "../../utils/verificarExistenciaCategoriaPorID";
 
 export async function DeletarCategoriaController(express: expressDTO) {
@@ -7,22 +8,25 @@ export async function DeletarCategoriaController(express: expressDTO) {
   const categoriaExistente = await VerificarExistenciaCategoriaPorID(dadosCategoria.id);
 
   if (dadosCategoria.id.length === 0) {
-    return express.res.status(401).send({
-      status: 401,
+    return RespostasDasRequisicoes({
       message: "Você precisa fornecer um ID",
+      status: 401,
+      express: express,
     });
   }
 
   if (categoriaExistente === false) {
-    return express.res.status(404).send({
-      status: 404,
+    return RespostasDasRequisicoes({
       message: "Categoria Não encontrada",
+      status: 404,
+      express: express,
     });
   }
 
   await DeletarCategoria(dadosCategoria.id);
-  return express.res.status(200).send({
-    status: 200,
+  return RespostasDasRequisicoes({
     message: "Categoria deletada com sucesso",
+    status: 200,
+    express: express,
   });
 }
